@@ -1,130 +1,148 @@
-1. Register Endpoint
+# API Documentation
 
-Description
+This README provides information on how to use the **Register**, **Login**, and **Subscription** endpoints for the application. Each endpoint is described in detail, including the HTTP method, request URL, headers, and expected request/response format.
+
+---
+
+## **1. Register Endpoint**
+
+### **Description**
 
 This endpoint allows a new user to register by providing a username and password.
 
-HTTP Request
+### **HTTP Request**
 
-Method: POST
+- **Method**: `POST`
+- **URL**: `http://localhost:3000/api/auth/register`
 
-URL: http://localhost:3000/api/auth/register
+### **Headers**
 
-Headers
+- `Content-Type`: `application/json`
 
-Content-Type: application/json
+### **Request Body**
 
-Request Body
-
+```json
 {
-"username": "testuser",
-"password": "testpassword"
+  "username": "testuser",
+  "password": "testpassword"
 }
+```
 
-Response
+### **Response**
 
-Status: 201 Created
+- **Status**: `201 Created`
+- **Body**:
 
-Body:
-
+```
 User registered
+```
 
-Error Responses
+### **Error Responses**
 
-Status: 500 Internal Server Error
+- **Status**: `500 Internal Server Error`
+  - Occurs if there is an issue saving the user to the database.
 
-Occurs if there is an issue saving the user to the database.
+---
 
-2. Login Endpoint
+## **2. Login Endpoint**
 
-Description
+### **Description**
 
 This endpoint allows an existing user to log in by providing valid credentials. Upon successful login, it returns a JWT token.
 
-HTTP Request
+### **HTTP Request**
 
-Method: POST
+- **Method**: `POST`
+- **URL**: `http://localhost:3000/api/auth/login`
 
-URL: http://localhost:3000/api/auth/login
+### **Headers**
 
-Headers
+- `Content-Type`: `application/json`
 
-Content-Type: application/json
+### **Request Body**
 
-Request Body
-
+```json
 {
-"username": "testuser",
-"password": "testpassword"
+  "username": "testuser",
+  "password": "testpassword"
 }
+```
 
-Response
+### **Response**
 
-Status: 200 OK
+- **Status**: `200 OK`
+- **Body**:
 
-Body:
-
+```json
 {
-"token": "your_jwt_token_here"
+  "token": "your_jwt_token_here"
 }
+```
 
-Error Responses
+### **Error Responses**
 
-Status: 401 Unauthorized
+- **Status**: `401 Unauthorized`
+  - Occurs if the username or password is incorrect.
+- **Status**: `500 Internal Server Error`
+  - Occurs if there is an issue with the login process.
 
-Occurs if the username or password is incorrect.
+### **Notes**
 
-Status: 500 Internal Server Error
+- Save the returned JWT token to use it for protected endpoints.
 
-Occurs if there is an issue with the login process.
+---
 
-Notes
+## **3. Subscription Endpoint**
 
-Save the returned JWT token to use it for protected endpoints.
-
-3. Subscription Endpoint
-
-Description
+### **Description**
 
 This endpoint allows a user to subscribe to a channel by specifying the user and channel IDs.
 
-HTTP Request
+### **HTTP Request**
 
-Method: POST
+- **Method**: `POST`
+- **URL**: `http://localhost:3000/api/subscriptions`
 
-URL: http://localhost:3000/api/subscriptions
+### **Headers**
 
-Headers
+- `Content-Type`: `application/json`
+- `Authorization`: `Bearer <your_jwt_token>`
 
-Content-Type: application/json
+### **Request Body**
 
-Authorization: Bearer <your_jwt_token>
-
-Request Body
-
+```json
 {
-"userId": "64e5f4a4e10f0f0e4c7b39f4",
-"channelId": "64e5f4b1e10f0f0e4c7b39f5"
+  "userId": "64e5f4a4e10f0f0e4c7b39f4",
+  "channelId": "64e5f4b1e10f0f0e4c7b39f5"
 }
+```
 
-Response
+### **Response**
 
-Status: 201 Created
+- **Status**: `201 Created`
+- **Body**:
 
-Body:
-
+```
 Subscribed successfully
+```
 
-Error Responses
+### **Error Responses**
 
-Status: 400 Bad Request
+- **Status**: `400 Bad Request`
+  - Occurs if the user is already subscribed to the channel.
+- **Status**: `500 Internal Server Error`
+  - Occurs if there is an issue saving the subscription to the database.
 
-Occurs if the user is already subscribed to the channel.
+### **Notes**
 
-Status: 500 Internal Server Error
+- Replace `userId` and `channelId` with actual IDs from the database.
 
-Occurs if there is an issue saving the subscription to the database.
+---
 
-Notes
+## **General Notes**
 
-Replace userId and channelId with actual IDs from the database.
+1. Ensure the backend server is running on `http://localhost:3000`.
+2. Use a tool like Postman to test these endpoints.
+3. For protected endpoints (e.g., Subscription), include the `Authorization` header with a valid JWT token.
+
+Feel free to reach out if you encounter any issues while using these endpoints!
