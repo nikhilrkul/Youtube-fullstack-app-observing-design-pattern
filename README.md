@@ -144,5 +144,3 @@ Subscribed successfully
 1. Ensure the backend server is running on `http://localhost:3000`.
 2. Use a tool like Postman to test these endpoints.
 3. For protected endpoints (e.g., Subscription), include the `Authorization` header with a valid JWT token.
-
-Feel free to reach out if you encounter any issues while using these endpoints!
